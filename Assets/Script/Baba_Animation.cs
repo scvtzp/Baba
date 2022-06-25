@@ -13,6 +13,8 @@ public class Baba_Animation : MonoBehaviour
 
     void Update()
     {
+        if (!GetComponent<Tile>().TypeArray[(int)Whatis_Type.You])
+            return;
         if (Animator.GetInteger("Count_UDLR") == 0 && Input.GetKey("w"))
             Animator.SetInteger("Count_UDLR", 1);
         else if (Input.GetKeyUp("w"))

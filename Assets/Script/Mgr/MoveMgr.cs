@@ -4,9 +4,13 @@ using System.Collections.Generic;
 public class MoveMgr : Singleton<MoveMgr>
 {
     public List<List<List<Tile>>> objectPool = new List<List<List<Tile>>>();
+    protected AudioSource audioSource; //이동 효과음
 
     private void Awake()
     {
+        if (GetComponent<AudioSource>() != null)
+            audioSource = GetComponent<AudioSource>();
+
         //인덱스를 좌표로 활용할거기 때문에 24*18 크기의 null로 미리 풀 채움. 
         for (int i = 0; i < 18; ++i)
         {
@@ -20,6 +24,8 @@ public class MoveMgr : Singleton<MoveMgr>
 
     public void Move(int StartX, int StartY, Vector3 Vec) //이동 출발 위치x ,y , 방향
     {
+        audioSource.Play();
+
         StartX /= 24;
         StartY /= 24;
 

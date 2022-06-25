@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Baba : Tile
 {
@@ -21,6 +22,12 @@ public class Baba : Tile
         {
             MoveMgr.Instance.Move((int)transform.position.x, (int)transform.position.y, new Vector3(x, y, 0));
             MoveCoolTime = 0;
+        }
+
+        //닫기/열기가 한몸이면 자동 자살.
+        if (TypeArray[(int)Whatis_Type.Open] && TypeArray[(int)Whatis_Type.Shut])
+        {
+            Destroy(this.gameObject);
         }
 
 

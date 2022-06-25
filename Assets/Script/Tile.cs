@@ -13,6 +13,7 @@ public class Tile : MonoBehaviour
     private float MoveTimeCount = 0.0f;
     private Vector3 StartTrans = Vector3.zero;
 
+
     private void Awake()
     {
         MoveMgr.Instance.objectPool[(int)transform.position.y / 24][(int)transform.position.x / 24].Add(this);
@@ -33,7 +34,7 @@ public class Tile : MonoBehaviour
             if (GetComponent<CircleCollider2D>() != null)
                 GetComponent<CircleCollider2D>().radius = 1;
 
-            if (MoveTimeCount >= 0.1f)
+            if (MoveTimeCount >= 0.03f)
             {
                 MoveTimeCount = 0;
                 transform.position = StartTrans + (MoveCommand * 24);
@@ -45,14 +46,19 @@ public class Tile : MonoBehaviour
                     GetComponent<BoxCollider2D>().size = new Vector2(24, 24);
                 if (GetComponent<CircleCollider2D>() != null)
                     GetComponent<CircleCollider2D>().radius = 13;
-
-
             }
         }
     }
     private void OnDestroy()
     {
-        MoveMgr.Instance.objectPool[(int)transform.position.y / 24][(int)transform.position.x / 24] = null;
+        for(int i = 0; i < MoveMgr.Instance.objectPool[(int)transform.position.y / 24][(int)transform.position.x / 24].Count; ++i)
+        {
+            if(MoveMgr.Instance.objectPool[(int)transform.position.y / 24][(int)transform.position.x / 24][i] == this)
+            {
+                MoveMgr.Instance.objectPool[(int)transform.position.y / 24][(int)transform.position.x / 24].RemoveAt(i);
+            }
+        }
+        //MoveMgr.Instance.objectPool[(int)transform.position.y / 24][(int)transform.position.x / 24] = null;
         ObjectMgr.Instance.objectPool.Remove(this);
     }
 }

@@ -120,8 +120,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MyType: 2
-  TypeArray: 0000000000000000
+  TypeArray: 00000000000000000000
   MoveCommand: {x: 0, y: 0, z: 0}
+  Setting_MoveCoolTime: 0.3
 --- !u!114 &5661837919609173749
 MonoBehaviour:
   m_ObjectHideFlags: 0

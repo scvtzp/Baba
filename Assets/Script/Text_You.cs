@@ -11,6 +11,8 @@ public enum Whatis_Type
     Hot,
     Melt,
     Sink,
+    Shut, //´İÈû
+    Open, //¿­¸² (µÑÀÌ °ãÄ¡¸é »ç¶óÁü)
 
     End
 }
