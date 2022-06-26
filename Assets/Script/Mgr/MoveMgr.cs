@@ -14,10 +14,10 @@ public class MoveMgr : Singleton<MoveMgr>
         audioSource = GetComponent<AudioSource>();
 
         //인덱스를 좌표로 활용할거기 때문에 24*18 크기의 null로 미리 풀 채움. 
-        for (int i = 0; i < 18; ++i)
+        for (int i = 0; i < 22; ++i)
         {
             objectPool.Add(new List<List<Tile>>());
-            for (int j = 0; j < 25; ++j)
+            for (int j = 0; j < 26; ++j)
             {
                 objectPool[i].Add(new List<Tile>());
             }
