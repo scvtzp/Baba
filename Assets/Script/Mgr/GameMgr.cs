@@ -17,6 +17,9 @@ public class GameMgr : Singleton<GameMgr>
         //R버튼 = 리스타트
         if(Input.GetKey("r"))
         {
+            MoveMgr.Instance.Awake();
+            ObjectMgr.Instance.Awake();
+
             SceneManager.LoadScene(NowSceneName);
         }
 
@@ -47,7 +50,14 @@ public class GameMgr : Singleton<GameMgr>
                         NowSceneName = NextSceneName;
                         NextSceneName = "MenuScene";
                         break;
-
+                    case "MenuScene":
+                        NowSceneName = NextSceneName;
+                        NextSceneName = "1-1Scene";
+                        break;
+                    case "1-1Scene":
+                        NowSceneName = NextSceneName;
+                        NextSceneName = "1-2Scene";
+                        break;
                 }
             }
         }

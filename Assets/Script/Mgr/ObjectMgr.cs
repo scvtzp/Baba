@@ -11,6 +11,8 @@ public class ObjectMgr : Singleton<ObjectMgr>
     public void Awake()
     {
         base.Awake();
+        for (int i = 0; i < objectPool.Count; ++i)
+            Destroy(objectPool[i].gameObject);
         objectPool.Clear();
         RuleList.Clear();
         HasRuleList.Clear();
