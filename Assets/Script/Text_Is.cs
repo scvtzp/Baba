@@ -18,6 +18,11 @@ public class Text_Is : Tile
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.GetComponent<Text_Baba>() == null && collision.GetComponent<Text_You>() == null)
+        {
+            return;
+        }
+
         //1. 상하좌우 어디에 들어왔는지 확인
         if (collision.GetComponent<Text_You>() != null || collision.GetComponent<Text_Baba>() != null)
         {
@@ -76,6 +81,11 @@ public class Text_Is : Tile
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (collision.GetComponent<Text_Baba>() == null && collision.GetComponent<Text_You>() == null)
+        {
+            return;
+        }
+
         //x에 차이가 없을때 -> 즉, y값에 차이가 있다 -> up down 중에 수정.
         if (collision.transform.position.x - transform.position.x > -1 
             && collision.transform.position.x - transform.position.x < 1)

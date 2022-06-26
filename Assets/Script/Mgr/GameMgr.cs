@@ -31,6 +31,8 @@ public class GameMgr : Singleton<GameMgr>
                 Timer = 0;
                 WinCheck = false;
 
+                Wintext.GetComponent<TextMeshProUGUI>().enabled = false;
+
                 switch (NextSceneName)
                 {
                     case "1-2Scene":
@@ -39,8 +41,13 @@ public class GameMgr : Singleton<GameMgr>
                         break;
                     case "1-3Scene":
                         NowSceneName = NextSceneName;
+                        NextSceneName = "1-4Scene";
+                        break;
+                    case "1-4Scene":
+                        NowSceneName = NextSceneName;
                         NextSceneName = "MenuScene";
                         break;
+
                 }
             }
         }

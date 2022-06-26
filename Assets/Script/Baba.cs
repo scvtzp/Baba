@@ -49,13 +49,6 @@ public class Baba : Tile
         {
             Destroy(this.gameObject);
         }
-
-        //닫기/열기가 한몸이면 자동 자살.
-        if (TypeArray[(int)Whatis_Type.Open] && TypeArray[(int)Whatis_Type.Shut])
-        {
-            Destroy(this.gameObject);
-        }
-
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -64,6 +57,10 @@ public class Baba : Tile
         {
             Destroy(collision.gameObject);
         }
-
+        //내가 defeat이고 너가 you일때 너 삭제.
+        else if (TypeArray[(int)Whatis_Type.Defeat] && collision.GetComponent<Baba>().TypeArray[(int)Whatis_Type.You])
+        {
+            Destroy(collision.gameObject);
+        }
     }
 }

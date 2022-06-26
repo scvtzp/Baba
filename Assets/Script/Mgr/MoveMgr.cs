@@ -17,7 +17,7 @@ public class MoveMgr : Singleton<MoveMgr>
         for (int i = 0; i < 18; ++i)
         {
             objectPool.Add(new List<List<Tile>>());
-            for (int j = 0; j < 24; ++j)
+            for (int j = 0; j < 25; ++j)
             {
                 objectPool[i].Add(new List<Tile>());
             }
@@ -26,8 +26,7 @@ public class MoveMgr : Singleton<MoveMgr>
 
     public bool Move(int StartX, int StartY, Vector3 Vec) //이동 출발 위치x ,y , 방향
     {
-        if (audioSource != null)
-        {
+        if (audioSource != null)        {
             audioSource.Play();
         }
 
@@ -36,15 +35,22 @@ public class MoveMgr : Singleton<MoveMgr>
         StartY /= 24;
 
         //오른쪽으로 갈때. xy중첩 신경 안써주는 이유는 그럴일이 없기 때문.
-        if (Vec.x == 1 && StartX < 23)
+        if (Vec.x == 1)
         {
-            for (int i = StartX + 1; i < 24; ++i)
+            if (StartX >= 24)
+                return false;
+
+            for (int i = StartX + 1; i < 26; ++i)
             {
                 int StopCount = 0;
+                if (i == 25)
+                    return false;
+
                 //xy고정된 상태로 z쭉 탐색하면서 모두 조건에 부합하는 칸들인지 확인함.
-                for(int k = 0; k < objectPool[StartY][i].Count; ++k)
+                for (int k = 0; k < objectPool[StartY][i].Count; ++k)
                 {
-                    if(objectPool[StartY][i][k].TypeArray[(int)Whatis_Type.Push])
+
+                    if (objectPool[StartY][i][k].TypeArray[(int)Whatis_Type.Push])
                     {
                         //밀리는애 나오면 어쩌피 다음칸이 빈칸인지 확인해야해서 break;
                         break;
@@ -85,11 +91,17 @@ public class MoveMgr : Singleton<MoveMgr>
             }
         }
 
-        else if (Vec.x == -1 && StartX > 0)
+        else if (Vec.x == -1)
         {
-            for (int i = StartX - 1; i >= 0; --i)
+            if (StartX <= 0)
+                return false;
+
+            for (int i = StartX - 1; i >= -1; --i)
             {
                 int StopCount = 0;
+                if (i == -1)
+                    return false;
+
                 for (int k = 0; k < objectPool[StartY][i].Count; ++k)
                 {
                     if (objectPool[StartY][i][k].TypeArray[(int)Whatis_Type.Push])
@@ -102,6 +114,7 @@ public class MoveMgr : Singleton<MoveMgr>
 
                     else if (!objectPool[StartY][i][k].TypeArray[(int)Whatis_Type.Stop] || !objectPool[StartY][i][k].TypeArray[(int)Whatis_Type.Push])
                         return false;
+
                 }
 
                 //(z에 있는 모든 칸이 겹침가능한 칸 || 빈칸) 이동시작.
