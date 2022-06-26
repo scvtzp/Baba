@@ -1113,7 +1113,7 @@ Tilemap:
       - {fileID: 21300000, guid: a3adfac2aa191f1408fc2f4c34ef7ea2, type: 3}
       - {fileID: 21300000, guid: 81161adb2a5b39d45bffdb369e45e674, type: 3}
       - {fileID: 21300000, guid: 49da134dcf86b2f45a484d1869a2b7b8, type: 3}
-      m_AnimationSpeed: 3
+      m_AnimationSpeed: 3.0000002
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 0, y: 8, z: 0}
@@ -1122,7 +1122,7 @@ Tilemap:
       - {fileID: 21300000, guid: a3adfac2aa191f1408fc2f4c34ef7ea2, type: 3}
       - {fileID: 21300000, guid: 81161adb2a5b39d45bffdb369e45e674, type: 3}
       - {fileID: 21300000, guid: 49da134dcf86b2f45a484d1869a2b7b8, type: 3}
-      m_AnimationSpeed: 3
+      m_AnimationSpeed: 3.0000002
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 19, y: 9, z: 0}
@@ -1140,7 +1140,7 @@ Tilemap:
       - {fileID: 21300000, guid: a3adfac2aa191f1408fc2f4c34ef7ea2, type: 3}
       - {fileID: 21300000, guid: 81161adb2a5b39d45bffdb369e45e674, type: 3}
       - {fileID: 21300000, guid: 49da134dcf86b2f45a484d1869a2b7b8, type: 3}
-      m_AnimationSpeed: 3
+      m_AnimationSpeed: 3.0000002
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 16, y: 13, z: 0}
@@ -5244,6 +5244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae61b685532919a47ab53a68a9308960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NowSceneName: 1-1Scene
   NextSceneName: 1-2Scene
   WinCheck: 0
   Wintext: {fileID: 1084048985}

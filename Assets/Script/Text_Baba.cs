@@ -21,12 +21,14 @@ public enum Whatis_Baba
     Text,
     Empty,
     All,
+    Box,
     End
 }
 
 public class Text_Baba : Tile
 {
     public Whatis_Baba Type;
+    public GameObject ForHasObj;
 
     //결국 필요한건 너가 누군질 알아야함.
     // Update is called once per frame

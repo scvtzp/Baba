@@ -6,6 +6,15 @@ public class ObjectMgr : Singleton<ObjectMgr>
 {
     public List<Tile> objectPool = new List<Tile>();
     public List<KeyValuePair<Whatis_Baba, Whatis_Type>> RuleList = new();
+    public List<KeyValuePair<Whatis_Baba, GameObject>> HasRuleList = new();
+
+    public void Awake()
+    {
+        base.Awake();
+        objectPool.Clear();
+        RuleList.Clear();
+        HasRuleList.Clear();
+    }
 
     public void NewRule(KeyValuePair<Whatis_Baba, Whatis_Type> Pair)
     {
@@ -22,7 +31,6 @@ public class ObjectMgr : Singleton<ObjectMgr>
             }
         }
     }
-
     public void DeleteRule(KeyValuePair<Whatis_Baba, Whatis_Type> Pair)
     {
         RuleList.Remove(Pair);
@@ -38,5 +46,14 @@ public class ObjectMgr : Singleton<ObjectMgr>
             }
         }
     }
+    public void NewHasRule(KeyValuePair<Whatis_Baba, GameObject> Pair)
+    {
+        HasRuleList.Add(Pair);
+    }
+    public void DeleteHasRule(KeyValuePair<Whatis_Baba, GameObject> Pair)
+    {
+        HasRuleList.Remove(Pair);
+    }
+
 
 }

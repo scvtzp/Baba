@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,13 +24,17 @@ public class Singleton<T> : MonoBehaviour where T : Component
         }
     }
 
-    private void Awake()
+    public void Awake()
     {
-        //as¿¬»ê : E as T -> E´Â °ªÀ» ¹İÈ¯ÇÏ´Â ½ÄÀÌ°í, T´Â Çü½Ä ¶Ç´Â Çü½Ä ¸Å°³ º¯¼öÀÇ ÀÌ¸§ÀÔ´Ï´Ù.
+        DontDestroyOnLoad(gameObject);
+
+        //asì—°ì‚° : E as T -> EëŠ” ê°’ì„ ë°˜í™˜í•˜ëŠ” ì‹ì´ê³ , TëŠ” í˜•ì‹ ë˜ëŠ” í˜•ì‹ ë§¤ê°œ ë³€ìˆ˜ì˜ ì´ë¦„ì…ë‹ˆë‹¤.
         if (instance == null)
             instance = this as T; 
         else
+        {
             if (instance != this)
-            Destroy(gameObject);
+                Destroy(gameObject);
+        }
     }
 }

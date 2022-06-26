@@ -13,9 +13,16 @@ public class Tile : MonoBehaviour
     private float MoveTimeCount = 0.0f;
     private Vector3 StartTrans = Vector3.zero;
 
-
     private void Awake()
     {
+        for(int i = 0; i < ObjectMgr.Instance.RuleList.Count; ++i)
+        {
+            if(ObjectMgr.Instance.RuleList[i].Key == MyType)
+            {
+                TypeArray[(int)ObjectMgr.Instance.RuleList[i].Value] = true;
+            }
+        }
+
         MoveMgr.Instance.objectPool[(int)transform.position.y / 24][(int)transform.position.x / 24].Add(this);
         StartTrans = transform.position;
 
@@ -26,13 +33,17 @@ public class Tile : MonoBehaviour
     {
         if (MoveCommand != new Vector3(0, 0, 0))
         {
+            if(GetComponent<Text_Baba>() != null || GetComponent<Text_You>() != null || GetComponent<Text_Is>() != null)
+            {
+                if (GetComponent<BoxCollider2D>() != null)
+                    GetComponent<BoxCollider2D>().size = new Vector2 (1,1);
+                if (GetComponent<CircleCollider2D>() != null)
+                    GetComponent<CircleCollider2D>().radius = 1;
+            }
+
             MoveTimeCount += Time.deltaTime;
             transform.position += MoveCommand * 24 * Time.deltaTime;
 
-            if (GetComponent<BoxCollider2D>() != null)
-                GetComponent<BoxCollider2D>().size = new Vector2 (1,1);
-            if (GetComponent<CircleCollider2D>() != null)
-                GetComponent<CircleCollider2D>().radius = 1;
 
             if (MoveTimeCount >= 0.03f)
             {
@@ -42,10 +53,13 @@ public class Tile : MonoBehaviour
                 StartTrans = transform.position;
                 MoveCommand = new Vector3(0, 0, 0);
 
-                if (GetComponent<BoxCollider2D>() != null)
-                    GetComponent<BoxCollider2D>().size = new Vector2(24, 24);
-                if (GetComponent<CircleCollider2D>() != null)
-                    GetComponent<CircleCollider2D>().radius = 13;
+                if (GetComponent<Text_Baba>() != null || GetComponent<Text_You>() != null || GetComponent<Text_Is>() != null)
+                {
+                    if (GetComponent<BoxCollider2D>() != null)
+                        GetComponent<BoxCollider2D>().size = new Vector2(24, 24);
+                    if (GetComponent<CircleCollider2D>() != null)
+                        GetComponent<CircleCollider2D>().radius = 13;
+                }
             }
         }
     }
@@ -58,6 +72,15 @@ public class Tile : MonoBehaviour
                 MoveMgr.Instance.objectPool[(int)transform.position.y / 24][(int)transform.position.x / 24].RemoveAt(i);
             }
         }
+
+        for(int i = 0; i < ObjectMgr.Instance.HasRuleList.Count; ++i)
+        {
+            if(ObjectMgr.Instance.HasRuleList[i].Key == MyType)
+            {
+                Instantiate(ObjectMgr.Instance.HasRuleList[i].Value, GetComponent<Transform>().position, Quaternion.Euler(0,0,0));
+            }
+        }
+
         //MoveMgr.Instance.objectPool[(int)transform.position.y / 24][(int)transform.position.x / 24] = null;
         ObjectMgr.Instance.objectPool.Remove(this);
     }

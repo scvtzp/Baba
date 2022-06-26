@@ -1,15 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class MoveMgr : Singleton<MoveMgr>
 {
     public List<List<List<Tile>>> objectPool = new List<List<List<Tile>>>();
     protected AudioSource audioSource; //이동 효과음
 
-    private void Awake()
+    public void Awake()
     {
-        if (GetComponent<AudioSource>() != null)
-            audioSource = GetComponent<AudioSource>();
+        base.Awake();
+
+        audioSource = GetComponent<AudioSource>();
 
         //인덱스를 좌표로 활용할거기 때문에 24*18 크기의 null로 미리 풀 채움. 
         for (int i = 0; i < 18; ++i)
@@ -24,7 +26,11 @@ public class MoveMgr : Singleton<MoveMgr>
 
     public void Move(int StartX, int StartY, Vector3 Vec) //이동 출발 위치x ,y , 방향
     {
-        audioSource.Play();
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
+
 
         StartX /= 24;
         StartY /= 24;
@@ -38,6 +44,12 @@ public class MoveMgr : Singleton<MoveMgr>
                 //xy고정된 상태로 z쭉 탐색하면서 모두 조건에 부합하는 칸들인지 확인함.
                 for(int k = 0; k < objectPool[StartY][i].Count; ++k)
                 {
+                    if(objectPool[StartY][i][k].TypeArray[(int)Whatis_Type.Push])
+                    {
+                        //밀리는애 나오면 어쩌피 다음칸이 빈칸인지 확인해야해서 break;
+                        break;
+                    }
+
                     //빈칸이거나 겹침가능한 칸이면 Count+1
                     if (objectPool[StartY][i][k] == null || !objectPool[StartY][i][k].TypeArray[(int)Whatis_Type.Stop])
                         StopCount++;
@@ -78,6 +90,11 @@ public class MoveMgr : Singleton<MoveMgr>
                 int StopCount = 0;
                 for (int k = 0; k < objectPool[StartY][i].Count; ++k)
                 {
+                    if (objectPool[StartY][i][k].TypeArray[(int)Whatis_Type.Push])
+                    {
+                        //밀리는애 나오면 어쩌피 다음칸이 빈칸인지 확인해야해서 break;
+                        break;
+                    }
                     if (objectPool[StartY][i][k] == null || !objectPool[StartY][i][k].TypeArray[(int)Whatis_Type.Stop])
                         StopCount++;
 
@@ -113,6 +130,11 @@ public class MoveMgr : Singleton<MoveMgr>
                 //xy고정된 상태로 z쭉 탐색하면서 모두 조건에 부합하는 칸들인지 확인함.
                 for (int k = 0; k < objectPool[i][StartX].Count; ++k)
                 {
+                    if (objectPool[i][StartX][k].TypeArray[(int)Whatis_Type.Push])
+                    {
+                        //밀리는애 나오면 어쩌피 다음칸이 빈칸인지 확인해야해서 break;
+                        break;
+                    }
                     //빈칸이거나 겹침가능한 칸이면 Count+1
                     if (objectPool[i][StartX][k] == null || !objectPool[i][StartX][k].TypeArray[(int)Whatis_Type.Stop])
                         StopCount++;
@@ -154,6 +176,12 @@ public class MoveMgr : Singleton<MoveMgr>
                 //xy고정된 상태로 z쭉 탐색하면서 모두 조건에 부합하는 칸들인지 확인함.
                 for (int k = 0; k < objectPool[i][StartX].Count; ++k)
                 {
+                    if (objectPool[i][StartX][k].TypeArray[(int)Whatis_Type.Push])
+                    {
+                        //밀리는애 나오면 어쩌피 다음칸이 빈칸인지 확인해야해서 break;
+                        break;
+                    }
+
                     //빈칸이거나 겹침가능한 칸이면 Count+1
                     if (objectPool[i][StartX][k] == null || !objectPool[i][StartX][k].TypeArray[(int)Whatis_Type.Stop])
                         StopCount++;
@@ -195,4 +223,21 @@ public class MoveMgr : Singleton<MoveMgr>
             }
         }
     }
+    //void OnEnable()
+    //{
+    //    // 델리게이트 체인 추가
+    //    SceneManager.sceneLoaded += OnSceneLoaded;
+    //}
+
+    //private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    //{
+    //    objectPool.Clear();
+    //    Awake();
+    //}
+
+    //void OnDisable()
+    //{
+    //    // 델리게이트 체인 제거
+    //    SceneManager.sceneLoaded -= OnSceneLoaded;
+    //}
 }

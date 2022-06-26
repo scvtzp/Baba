@@ -76,7 +76,9 @@ public class Text_Is : Tile
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.transform.position.y != transform.position.y)
+        //x에 차이가 없을때 -> 즉, y값에 차이가 있다 -> up down 중에 수정.
+        if (collision.transform.position.x - transform.position.x > -1 
+            && collision.transform.position.x - transform.position.x < 1)
         {
             if(Up!= null && Down != null && Down.GetComponent<Text_You>() != null)
                 ObjectMgr.Instance.DeleteRule(new KeyValuePair<Whatis_Baba, Whatis_Type>(Up.GetComponent<Text_Baba>().Type, Down.GetComponent<Text_You>().Type));
@@ -86,7 +88,10 @@ public class Text_Is : Tile
             else
                 Down = null;
         }
-        else if (collision.transform.position.x != transform.position.x)
+
+        else if (collision.transform.position.y - transform.position.y > -1
+                && collision.transform.position.y - transform.position.y < 1)
+
         {
             if (Left != null && Right != null && Right.GetComponent<Text_You>() != null)
                 ObjectMgr.Instance.DeleteRule(new KeyValuePair<Whatis_Baba, Whatis_Type>(Left.GetComponent<Text_Baba>().Type, Right.GetComponent<Text_You>().Type));
