@@ -24,7 +24,7 @@ public class MoveMgr : Singleton<MoveMgr>
         }
     }
 
-    public void Move(int StartX, int StartY, Vector3 Vec) //이동 출발 위치x ,y , 방향
+    public bool Move(int StartX, int StartY, Vector3 Vec) //이동 출발 위치x ,y , 방향
     {
         if (audioSource != null)
         {
@@ -56,7 +56,7 @@ public class MoveMgr : Singleton<MoveMgr>
 
                     //그 전에 겹침이 불가능한 칸이 먼저 나오면 이동 정지.
                     else if (!objectPool[StartY][i][k].TypeArray[(int)Whatis_Type.Stop] || !objectPool[StartY][i][k].TypeArray[(int)Whatis_Type.Push])
-                        return;
+                        return false;
                 }
 
                 //(z에 있는 모든 칸이 겹침가능한 칸 || 빈칸) 이동시작.
@@ -70,7 +70,9 @@ public class MoveMgr : Singleton<MoveMgr>
                         for (int k = 0; k < objectPool[StartY][j-1].Count; ++k) //전 칸을 반복하며 그 칸에 어떤게 있는지 확인.
                         {
                             //밀었을때 밀리는애거나 / You(미는애)일때 당겨줌.
-                            if (objectPool[StartY][j-1][k].TypeArray[(int)Whatis_Type.Push] || objectPool[StartY][j - 1][k].TypeArray[(int)Whatis_Type.You])
+                            if (objectPool[StartY][j-1][k].TypeArray[(int)Whatis_Type.Push] 
+                                || objectPool[StartY][j - 1][k].TypeArray[(int)Whatis_Type.You]
+                                || objectPool[StartY][j - 1][k].TypeArray[(int)Whatis_Type.Move])
                             {
                                 objectPool[StartY][j - 1][k].MoveCommand = new Vector3(1, 0, 0);
                                 objectPool[StartY][j].Add(objectPool[StartY][j - 1][k]);
@@ -99,7 +101,7 @@ public class MoveMgr : Singleton<MoveMgr>
                         StopCount++;
 
                     else if (!objectPool[StartY][i][k].TypeArray[(int)Whatis_Type.Stop] || !objectPool[StartY][i][k].TypeArray[(int)Whatis_Type.Push])
-                        return;
+                        return false;
                 }
 
                 //(z에 있는 모든 칸이 겹침가능한 칸 || 빈칸) 이동시작.
@@ -109,7 +111,9 @@ public class MoveMgr : Singleton<MoveMgr>
                     {
                         for (int k = 0; k < objectPool[StartY][j + 1].Count; ++k) //전 칸을 반복하며 그 칸에 어떤게 있는지 확인.
                         {
-                            if (objectPool[StartY][j + 1][k].TypeArray[(int)Whatis_Type.Push] || objectPool[StartY][j + 1][k].TypeArray[(int)Whatis_Type.You])
+                            if (objectPool[StartY][j + 1][k].TypeArray[(int)Whatis_Type.Push] 
+                                || objectPool[StartY][j + 1][k].TypeArray[(int)Whatis_Type.You] 
+                                || objectPool[StartY][j + 1][k].TypeArray[(int)Whatis_Type.Move])
                             {
                                 objectPool[StartY][j + 1][k].MoveCommand = new Vector3(-1, 0, 0);
                                 objectPool[StartY][j].Add(objectPool[StartY][j + 1][k]);
@@ -141,7 +145,7 @@ public class MoveMgr : Singleton<MoveMgr>
 
                     //그 전에 겹침이 불가능한 칸이 먼저 나오면 이동 정지.
                     else if (!objectPool[i][StartX][k].TypeArray[(int)Whatis_Type.Stop] || !objectPool[i][StartX][k].TypeArray[(int)Whatis_Type.Push])
-                        return;
+                        return false;
                 }
 
                 //(z에 있는 모든 칸이 겹침가능한 칸 || 빈칸) 이동시작.
@@ -155,7 +159,9 @@ public class MoveMgr : Singleton<MoveMgr>
                         for (int k = 0; k < objectPool[j - 1][StartX].Count; ++k) //전 칸을 반복하며 그 칸에 어떤게 있는지 확인.
                         {
                             //밀었을때 밀리는애거나 / You(미는애)일때 당겨줌.
-                            if (objectPool[j - 1][StartX][k].TypeArray[(int)Whatis_Type.Push] || objectPool[j - 1][StartX][k].TypeArray[(int)Whatis_Type.You])
+                            if (objectPool[j - 1][StartX][k].TypeArray[(int)Whatis_Type.Push] 
+                                || objectPool[j - 1][StartX][k].TypeArray[(int)Whatis_Type.You] 
+                                || objectPool[j - 1][StartX][k].TypeArray[(int)Whatis_Type.Move])
                             {
                                 objectPool[j - 1][StartX][k].MoveCommand = new Vector3(0, 1, 0);
                                 objectPool[j][StartX].Add(objectPool[j - 1][StartX][k]);
@@ -188,7 +194,7 @@ public class MoveMgr : Singleton<MoveMgr>
 
                     //그 전에 겹침이 불가능한 칸이 먼저 나오면 이동 정지.
                     else if (!objectPool[i][StartX][k].TypeArray[(int)Whatis_Type.Stop] || !objectPool[i][StartX][k].TypeArray[(int)Whatis_Type.Push])
-                        return;
+                        return false;
                 }
 
                 //(z에 있는 모든 칸이 겹침가능한 칸 || 빈칸) 이동시작.
@@ -202,7 +208,9 @@ public class MoveMgr : Singleton<MoveMgr>
                         for (int k = 0; k < objectPool[j + 1][StartX].Count; ++k) //전 칸을 반복하며 그 칸에 어떤게 있는지 확인.
                         {
                             //밀었을때 밀리는애거나 / You(미는애)일때 당겨줌.
-                            if (objectPool[j + 1][StartX][k].TypeArray[(int)Whatis_Type.Push] || objectPool[j + 1][StartX][k].TypeArray[(int)Whatis_Type.You])
+                            if (objectPool[j + 1][StartX][k].TypeArray[(int)Whatis_Type.Push] 
+                                || objectPool[j + 1][StartX][k].TypeArray[(int)Whatis_Type.You] 
+                                || objectPool[j + 1][StartX][k].TypeArray[(int)Whatis_Type.Move])
                             {
                                 objectPool[j + 1][StartX][k].MoveCommand = new Vector3(0, -1, 0);
                                 objectPool[j][StartX].Add(objectPool[j + 1][StartX][k]);
@@ -222,6 +230,8 @@ public class MoveMgr : Singleton<MoveMgr>
                 GameMgr.Instance.WinTrigger();
             }
         }
+
+        return true;
     }
     //void OnEnable()
     //{

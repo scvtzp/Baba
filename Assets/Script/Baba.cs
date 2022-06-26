@@ -8,6 +8,7 @@ public class Baba : Tile
     // Update is called once per frame
     private float MoveCoolTime = 48572393;
     public float Setting_MoveCoolTime = 0.2f;
+    public Vector3 UDLR = new Vector3(1,0,0);
 
     void Update()
     {
@@ -22,9 +23,25 @@ public class Baba : Tile
         {
             MoveMgr.Instance.Move((int)transform.position.x, (int)transform.position.y, new Vector3(x, y, 0));
             MoveCoolTime = 0;
+
+            ////방향 표기.
+            UDLR = MoveCommand;
         }
 
+        //move 이동 처리해줌.
+        else if (TypeArray[(int)Whatis_Type.Move] && MoveCommand == new Vector3(0, 0, 0)
+            && (x != 0 || y != 0) && MoveCoolTime >= Setting_MoveCoolTime)
+        {
+            if(!MoveMgr.Instance.Move((int)transform.position.x, (int)transform.position.y, UDLR))
+            {
+                UDLR.x *= -1;
+                UDLR.y *= -1;
+                MoveMgr.Instance.Move((int)transform.position.x, (int)transform.position.y, UDLR);
+            }
+            MoveCoolTime = 0;
+        }    
         base.Update();
+
 
 
         //닫기/열기가 한몸이면 자동 자살.
